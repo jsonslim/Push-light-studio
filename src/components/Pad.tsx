@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 const Pad = () => {
-  const colors = ['gray', 'red', 'green', 'blue', 'orange', 'purple', 'teal'];
+  const colors = ['gray', 'white','red', 'green', 'blue', 'orange', 'purple', 'teal'];
   const [index, setIndex] = useState(0);
 
   const handleClick = () => {
