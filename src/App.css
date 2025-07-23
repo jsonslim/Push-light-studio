@@ -1,0 +1,16 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2px;
+  text-align: center;
+}
+
+.pad-container {
+  width: 700px;
+}
+.components-container {
+  display: flex;
+  flex-direction: row;
+  /* border: 1px solid red; */
+  padding: 12px;
+}
