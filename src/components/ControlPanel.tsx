@@ -22,7 +22,7 @@ const ControlPanel: React.FC<UIControlsProps> = ({
                 padding: '20px',
                 alignItems: 'stretch',
                 maxWidth: '200px',
-                margin: '20px',
+                margin: '16px',
             }}
         >
             <div style={{ display: "flex", flexDirection: 'row' }}>

@@ -6,11 +6,11 @@
 }
 
 .pad-container {
-  width: 700px;
+  /* width: 700px; */
 }
 .components-container {
   display: flex;
   flex-direction: row;
-  /* border: 1px solid red; */
+  border: 1px solid red;
   padding: 12px;
 }

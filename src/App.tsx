@@ -25,12 +25,12 @@ function App() {
 
   return (
     <>
-      <h1>Push light studio</h1>
+      <h2>Push light studio</h2>
       <div className='components-container'>
 
+          <ColorPalette></ColorPalette>
         <div className='pad-container'>
 
-          <ColorPalette></ColorPalette>
           <PadGrid></PadGrid>
         </div>
         <ControlPanel

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const Pad = ({ aspectRatio = '1.3 / 1', maxWidth = '80px', height }) => {
+const Pad = ({ maxWidth = '80px', maxHeight = '80px', aspectRatio = '1.3 / 1' }) => {
   const colors = ['gray', 'white', 'red', 'green', 'blue', 'orange', 'purple', 'teal'];
   const [index, setIndex] = useState(0);
 
@@ -12,14 +12,16 @@ const Pad = ({ aspectRatio = '1.3 / 1', maxWidth = '80px', height }) => {
     <div
       onClick={handleClick}
       style={{
-        width: '100%',
+        width: maxWidth,//'100%',
         aspectRatio,
         maxWidth,
+        maxHeight,
         backgroundColor: colors[index],
         cursor: 'pointer',
         transition: 'background-color 0.1s ease',
         borderRadius: '6px',
         boxShadow: '0 2px 5px rgba(0,0,0,0.15)',
+        // border: '1px solid grey'
       }}
     />
   );
