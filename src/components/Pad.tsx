@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-const Pad = () => {
-  const colors = ['gray', 'white','red', 'green', 'blue', 'orange', 'purple', 'teal'];
+const Pad = ({ aspectRatio = '1.3 / 1', maxWidth = '80px', height }) => {
+  const colors = ['gray', 'white', 'red', 'green', 'blue', 'orange', 'purple', 'teal'];
   const [index, setIndex] = useState(0);
 
   const handleClick = () => {
@@ -13,8 +13,8 @@ const Pad = () => {
       onClick={handleClick}
       style={{
         width: '100%',
-        aspectRatio: '1.3 / 1', // Keeps it square
-        maxWidth: '80px',
+        aspectRatio,
+        maxWidth,
         backgroundColor: colors[index],
         cursor: 'pointer',
         transition: 'background-color 0.1s ease',

@@ -3,6 +3,7 @@ import './App.css'
 
 import PadGrid from './components/PadGrid'
 import ControlPanel from './components/ControlPanel'
+import ColorPalette from './components/ColorPalette'
 
 function App() {
 
@@ -27,18 +28,19 @@ function App() {
       <h1>Push light studio</h1>
       <div className='components-container'>
 
-      <div className='pad-container'>
+        <div className='pad-container'>
 
-        <PadGrid></PadGrid>
-      </div>
-      <ControlPanel
-        onReset={handleReset}
-        onExportMidi={handleExportMidi}
-        onNextFrame={handleNextFrame}
-        onPrevFrame={handlePrevFrame}
+          <ColorPalette></ColorPalette>
+          <PadGrid></PadGrid>
+        </div>
+        <ControlPanel
+          onReset={handleReset}
+          onExportMidi={handleExportMidi}
+          onNextFrame={handleNextFrame}
+          onPrevFrame={handlePrevFrame}
         />
 
-        </div>
+      </div>
     </>
   )
 }

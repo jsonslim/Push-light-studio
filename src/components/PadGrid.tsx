@@ -19,7 +19,7 @@ const PadGrid = () => {
       }}
     >
       {grid.map((_, i) => (
-        <Pad key={i} />
+        <Pad width={'80px'} aspectRatio={'1.3 / 1'} key={i} />
       ))}
     </div>
   );
