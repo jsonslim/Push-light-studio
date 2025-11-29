@@ -9,15 +9,15 @@ const PadGrid = () => {
         display: 'grid',
         gridTemplateColumns: 'repeat(8, 1fr)',  // FIXED 8 columns
         rowGap: '5px',      // vertical gap
-        // columnGap: '8px',    // horizontal gap
-        padding: '20px',
+        columnGap: '3px',    // horizontal gap
+        padding: '16px',
         // maxWidth: '720px',
-        margin: '16px',
+        margin: '8px',
         justifyItems: 'center',
         width: '100%',       // container can shrink on small screens
         boxSizing: 'border-box',
-        border: '1px solid grey',
-        borderRadius: '16px'
+        // border: '1px solid grey',
+        borderRadius: '8px'
       }}
     >
       {grid.map((_, i) => (

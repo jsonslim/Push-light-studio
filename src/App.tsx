@@ -1,9 +1,9 @@
-import { useState } from 'react'
 import './App.css'
 
 import PadGrid from './components/PadGrid'
 import ControlPanel from './components/ControlPanel'
 import ColorPalette from './components/ColorPalette'
+import FrameLine from './components/FrameLine'
 
 function App() {
 
@@ -28,7 +28,7 @@ function App() {
       <h2>Push light studio</h2>
       <div className='components-container'>
 
-          <ColorPalette></ColorPalette>
+        <ColorPalette></ColorPalette>
         <div className='pad-container'>
 
           <PadGrid></PadGrid>
@@ -39,8 +39,8 @@ function App() {
           onNextFrame={handleNextFrame}
           onPrevFrame={handlePrevFrame}
         />
-
       </div>
+        <FrameLine></FrameLine>
     </>
   )
 }

@@ -1,11 +1,14 @@
 import { useState } from 'react';
+import colors from './globals.ts';
 
-const Pad = ({ maxWidth = '80px', maxHeight = '80px', aspectRatio = '1.3 / 1' }) => {
-  const colors = ['gray', 'white', 'red', 'green', 'blue', 'orange', 'purple', 'teal'];
-  const [index, setIndex] = useState(0);
+const Pad = ({ maxWidth = '80px', maxHeight = '80px', aspectRatio = '1.3 / 1', colorID=0 }) => {
+
+  const [index, setIndex] = useState(colorID % colors.length);
 
   const handleClick = () => {
-    setIndex((prevIndex) => (prevIndex + 1) % colors.length);
+    setIndex((prevIndex: number) => (prevIndex + 1) % colors.length);
+    console.log(index);
+
   };
 
   return (
@@ -16,7 +19,7 @@ const Pad = ({ maxWidth = '80px', maxHeight = '80px', aspectRatio = '1.3 / 1' })
         aspectRatio,
         maxWidth,
         maxHeight,
-        backgroundColor: colors[index],
+        backgroundColor: colors[index].color,
         cursor: 'pointer',
         transition: 'background-color 0.1s ease',
         borderRadius: '6px',

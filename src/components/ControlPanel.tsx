@@ -25,6 +25,7 @@ const ControlPanel: React.FC<UIControlsProps> = ({
                 margin: '16px',
             }}
         >
+            <div>Frame: 1</div>
             <div style={{ display: "flex", flexDirection: 'row' }}>
                 <button onClick={onPrevFrame}>Prev Frame</button>
                 <button onClick={onNextFrame}>Next Frame</button>

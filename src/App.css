@@ -11,6 +11,7 @@
 .components-container {
   display: flex;
   flex-direction: row;
-  border: 1px solid red;
-  padding: 12px;
+  border: 1px solid grey;
+  border-radius: 8px;
+  padding: 8px;
 }
