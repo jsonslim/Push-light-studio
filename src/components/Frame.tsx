@@ -13,8 +13,8 @@ const Frame = ({ color = 'black' }) => {
       style={{
         width: '100%',
         aspectRatio: '1.1 / 1',
-        maxWidth: '150px',
-        maxHeight: '100px',
+        maxWidth: '130px',
+        maxHeight: '80px',
         backgroundColor: color,
         cursor: 'pointer',
         transition: 'background-color 0.1s ease',

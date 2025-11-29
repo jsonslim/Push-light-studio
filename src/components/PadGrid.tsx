@@ -10,7 +10,7 @@ const PadGrid = () => {
         gridTemplateColumns: 'repeat(8, 1fr)',  // FIXED 8 columns
         rowGap: '5px',      // vertical gap
         columnGap: '3px',    // horizontal gap
-        padding: '16px',
+        padding: '8px',
         // maxWidth: '720px',
         margin: '8px',
         justifyItems: 'center',

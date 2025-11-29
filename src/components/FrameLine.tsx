@@ -14,10 +14,11 @@ export const FrameLine = () => {
                 flexDirection: 'row',
                 gap: '12px',
                 padding: '10px',
+                paddingLeft: '24px',
                 alignItems: 'stretch',
                 // maxWidth: '820px',
                 // margin: '8px',
-                border: '1px solid grey',
+                // border: '1px solid grey',
                 borderRadius: '8px'
             }}
         >

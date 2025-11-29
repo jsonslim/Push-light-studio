@@ -1,7 +1,7 @@
 import Pad from './Pad';
 
 const ColorPalette = () => {
-    const size = '28px';
+    const size = '30px';
     const grid = Array.from({ length: 64 });
 
     return (
@@ -12,7 +12,7 @@ const ColorPalette = () => {
                 gridTemplateColumns: 'repeat(4, 1fr)',  // FIXED 8 columns
                 rowGap: '3px',      // vertical gap
                 columnGap: '3px',    // horizontal gap
-                padding: '16px',
+                padding: '9px',
                 // maxWidth: '720px',
                 // width: '300px',
                 height: '520px',
