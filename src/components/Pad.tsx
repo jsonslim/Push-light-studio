@@ -1,30 +1,49 @@
-import { useState } from 'react';
-import colors from './globals.ts';
+import { colors } from './globals.ts';
 
-const Pad = ({ maxWidth = '80px', maxHeight = '80px', aspectRatio = '1.3 / 1', colorID=0 }) => {
+interface PadProps {
+  id: number;
+  maxWidth?: string;
+  maxHeight?: string;
+  aspectRatio?: string;
+  colorID?: number;
+  isSelected?: boolean;
+  onClick?: (id: number) => void;
+}
 
-  const [index, setIndex] = useState(colorID % colors.length);
-
+const Pad = ({
+  id,
+  maxWidth = '80px',
+  maxHeight = '80px',
+  aspectRatio = '1.3 / 1',
+  colorID = 0,
+  isSelected = false,
+  onClick
+}: PadProps) => {
   const handleClick = () => {
-    setIndex((prevIndex: number) => (prevIndex + 1) % colors.length);
-    console.log(index);
-
+    onClick?.(id);
   };
+
+  const borderStyle = isSelected
+    ? { border: '2px solid green' }
+    : { border: '2px solid transparent' };
+
+  const colorIndex = colorID % colors.length;
+  const backgroundColor = colors[colorIndex].color;
 
   return (
     <div
       onClick={handleClick}
       style={{
-        width: maxWidth,//'100%',
+        ...borderStyle,
+        width: maxWidth,
         aspectRatio,
         maxWidth,
         maxHeight,
-        backgroundColor: colors[index].color,
+        backgroundColor,
         cursor: 'pointer',
         transition: 'background-color 0.1s ease',
         borderRadius: '6px',
         boxShadow: '0 2px 5px rgba(0,0,0,0.15)',
-        // border: '1px solid grey'
       }}
     />
   );

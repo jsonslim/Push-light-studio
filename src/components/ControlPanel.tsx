@@ -5,6 +5,8 @@ interface UIControlsProps {
     onExportMidi: () => void;
     onNextFrame: () => void;
     onPrevFrame: () => void;
+    onCopyToNextFrame: () => void;
+    currentFrameNumber: number;
 }
 
 const ControlPanel: React.FC<UIControlsProps> = ({
@@ -12,6 +14,8 @@ const ControlPanel: React.FC<UIControlsProps> = ({
     onExportMidi,
     onNextFrame,
     onPrevFrame,
+    onCopyToNextFrame,
+    currentFrameNumber,
 }) => {
     return (
         <div
@@ -25,13 +29,13 @@ const ControlPanel: React.FC<UIControlsProps> = ({
                 margin: '16px',
             }}
         >
-            <div>Frame: 1</div>
+            <div>Frame: {currentFrameNumber}</div>
             <div style={{ display: "flex", flexDirection: 'row' }}>
                 <button onClick={onPrevFrame}>Prev Frame</button>
                 <button onClick={onNextFrame}>Next Frame</button>
             </div>
 
-            <button onClick={onPrevFrame}>Copy to next Frame</button>
+            <button onClick={onCopyToNextFrame}>Copy to next Frame</button>
             <button onClick={onReset}>Reset Layout</button>
             <button onClick={onExportMidi}>Export MIDI</button>
         </div >

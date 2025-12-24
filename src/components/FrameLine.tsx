@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
 import Frame from './Frame';
 
+interface FrameLineProps {
+    frames: Array<{ id: number; padColors: number[] }>;
+    currentFrameIndex: number;
+    onFrameSelect: (frameIndex: number) => void;
+    onAddFrame: () => void;
+    onDeleteFrame: (frameIndex: number) => void;
+}
 
-export const FrameLine = () => {
-
-    // const [frames, setFrames] = useState([{ id: 1, color: 'blue' }, { id: 2, color: 'red' }, { id: 3, color: 'green' }]);
-    const lineItems = Array.from({ length: 5 });
-
+export const FrameLine = ({ frames, currentFrameIndex, onFrameSelect, onAddFrame, onDeleteFrame }: FrameLineProps) => {
     return (
         <div
             style={{
@@ -14,21 +16,29 @@ export const FrameLine = () => {
                 flexDirection: 'row',
                 gap: '12px',
                 padding: '10px',
-                paddingLeft: '24px',
+                paddingLeft: '10px',
                 alignItems: 'stretch',
-                // maxWidth: '820px',
-                // margin: '8px',
-                // border: '1px solid grey',
-                borderRadius: '8px'
+                borderRadius: '8px',
+                background: 'rgba(20,20,20,255)',
+                marginTop: '24px',
+                marginBottom: '16px',
+                marginLeft: '16px',
+                marginRight: '16px',
             }}
         >
-            {
-                lineItems.map(() => {
-                    return (<Frame></Frame>);
-                })
-            }
-            <button>ADD FRAME</button>
-        </div >
+            {frames.map((frame, index) => (
+                <Frame
+                    key={frame.id}
+                    id={frame.id}
+                    padColors={frame.padColors}
+                    isSelected={currentFrameIndex === index}
+                    canDelete={frames.length > 1}
+                    onClick={() => onFrameSelect(index)}
+                    onDelete={() => onDeleteFrame(index)}
+                />
+            ))}
+            <button onClick={onAddFrame}>ADD FRAME</button>
+        </div>
     );
 };
 

@@ -1,6 +1,13 @@
 import Pad from './Pad';
+import { pads } from './globals';
 
-const PadGrid = () => {
+interface PadGridProps {
+  selectedPad: number | null;
+  padColors: number[];
+  onPadClick: (padId: number) => void;
+}
+
+const PadGrid = ({ selectedPad, padColors, onPadClick }: PadGridProps) => {
   const grid = Array.from({ length: 64 });
 
   return (
@@ -11,17 +18,23 @@ const PadGrid = () => {
         rowGap: '5px',      // vertical gap
         columnGap: '3px',    // horizontal gap
         padding: '8px',
-        // maxWidth: '720px',
         margin: '8px',
         justifyItems: 'center',
         width: '100%',       // container can shrink on small screens
         boxSizing: 'border-box',
-        // border: '1px solid grey',
         borderRadius: '8px'
       }}
     >
       {grid.map((_, i) => (
-        <Pad maxWidth={'80px'} aspectRatio={'1.3 / 1'} key={i} />
+        <Pad
+          id={pads[i].id}
+          key={pads[i].id}
+          maxWidth={'80px'}
+          aspectRatio={'1.3 / 1'}
+          colorID={padColors[i]}
+          isSelected={selectedPad === i}
+          onClick={onPadClick}
+        />
       ))}
     </div>
   );
