@@ -19,13 +19,14 @@ function App() {
   const [selectedPad, setSelectedPad] = useState<number | null>(null);
 
   // Frames state: array of frames, each containing its own padColors
+  // colorID 116 = velocity 116 = black/off (#000000)
   const [frames, setFrames] = useState<Frame[]>([
-    { id: 1, padColors: Array(64).fill(0) } // Start with one frame
+    { id: 1, padColors: Array(64).fill(116) } // Start with one frame, all pads off
   ]);
   const [currentFrameIndex, setCurrentFrameIndex] = useState<number>(0);
 
   // Get current frame's padColors
-  const currentPadColors = frames[currentFrameIndex]?.padColors || Array(64).fill(0);
+  const currentPadColors = frames[currentFrameIndex]?.padColors || Array(64).fill(116);
 
   const handlePadClick = (padId: number) => {
     // Find the grid index for this pad id
@@ -58,7 +59,7 @@ function App() {
 
   const handleAddFrame = () => {
     const newFrameId = Math.max(...frames.map(f => f.id), 0) + 1;
-    setFrames(prev => [...prev, { id: newFrameId, padColors: Array(64).fill(0) }]);
+    setFrames(prev => [...prev, { id: newFrameId, padColors: Array(64).fill(116) }]);
     setCurrentFrameIndex(frames.length); // Select the newly added frame
   };
 
@@ -69,7 +70,7 @@ function App() {
         const newFrames = [...prev];
         newFrames[currentFrameIndex] = {
           ...newFrames[currentFrameIndex],
-          padColors: Array(64).fill(0)
+          padColors: Array(64).fill(116)
         };
         return newFrames;
       });
