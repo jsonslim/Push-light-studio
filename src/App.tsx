@@ -17,13 +17,13 @@ interface Frame {
 
 function App() {
   // Pencil mode (always active now)
-  const [selectedColor, setSelectedColor] = useState<number>(116); // Default to black/off
+  const [selectedColor, setSelectedColor] = useState<number>(117); // Default to color ID 117
   const [isDrawing, setIsDrawing] = useState<boolean>(false); // Track if mouse is held down
 
   // Frames state: array of frames, each containing its own padColors
   // colorID 116 = velocity 116 = black/off (#000000)
   const [frames, setFrames] = useState<Frame[]>([
-    { id: 1, padColors: Array(64).fill(116) } // Start with one frame, all pads off
+    { id: 1, padColors: Array(64).fill(117) } // Start with one frame, all pads off
   ]);
   const [currentFrameIndex, setCurrentFrameIndex] = useState<number>(0);
 

@@ -515,121 +515,126 @@ export const colors = [
   },
   {
     "velocity": 103,
-    "color": "#19c219",
+    "color": "#006674",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 104,
-    "color": "#2c23ab",
+    "color": "#1a5870",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 105,
-    "color": "#070a55",
+    "color": "#2c23ab",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 106,
-    "color": "#5d16ac",
+    "color": "#070a55",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 107,
-    "color": "#230758",
+    "color": "#5d16ac",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 108,
-    "color": "#8d22a9",
+    "color": "#230758",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 109,
-    "color": "#3f0b58",
+    "color": "#8d22a9",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 110,
-    "color": "#8a1e74",
+    "color": "#3f0b58",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 111,
-    "color": "#3a072f",
+    "color": "#8a1e74",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 112,
-    "color": "#c3143f",
+    "color": "#3a072f",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 113,
-    "color": "#640914",
+    "color": "#c3143f",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 114,
-    "color": "#bd219a",
+    "color": "#640914",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 115,
-    "color": "#650d4e",
+    "color": "#bd219a",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 116,
-    "color": "#000000",
+    "color": "#650d4e",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 117,
-    "color": "#a37da4",
+    "color": "#010101",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 118,
-    "color": "#4e324a",
+    "color": "#a37da4",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 119,
-    "color": "#ebcae7",
+    "color": "#4e324a",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 120,
-    "color": "#a47ea5",
+    "color": "#ebcae7",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 121,
-    "color": "#dfbadc",
+    "color": "#a47ea5",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 122,
-    "color": "#8c658c",
+    "color": "#dfbadc",
     "notes": "Alternative high-intensity red"
   },
   {
     "velocity": 123,
-    "color": "#3a273b",
+    "color": "#8c658c",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 124,
-    "color": "#000ce2",
+    "color": "#3a273b",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 125,
-    "color": "#00ad1d",
+    "color": "#000ce2",
     "notes": "Approximate hue 120° at"
   },
   {
     "velocity": 126,
+    "color": "#00ad1d",
+    "notes": "Approximate hue 120° at"
+  },
+  {
+    "velocity": 127,
     "color": "#f6181e",
     "notes": "Approximate hue 120° at"
   }

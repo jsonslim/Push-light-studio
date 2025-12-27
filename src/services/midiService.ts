@@ -110,7 +110,7 @@ export function generateHardcodedMidi(): Blob {
 
 /**
  * Generate MIDI file from frame data
- * Each frame is 4 bars long (at 120 BPM with 96 ticks per quarter note = 1536 ticks per frame)
+ * Each frame is half a bar (2 beats) long (at 120 BPM with 96 ticks per quarter note = 192 ticks per frame)
  * @param frames Array of frames containing pad colors (velocities)
  * @param pads Mapping of pad IDs to MIDI notes
  */
@@ -125,7 +125,7 @@ export function generateMidiFromFrames(
         // MIDI constants
         const ticksPerQuarterNote = 96;
         const ticksPerBar = ticksPerQuarterNote * 4; // 4 beats per bar
-        const ticksPerFrame = ticksPerBar * 4; // 4 bars per frame = 1536 ticks
+        const ticksPerFrame = ticksPerBar / 2; // Half bar per frame = 192 ticks
 
         // MIDI file header
         const header = new Uint8Array([
