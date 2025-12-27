@@ -565,7 +565,7 @@ export const colors = [
   },
   {
     "velocity": 113,
-    "color": "#19c264091419",
+    "color": "#640914",
     "notes": "Approximate hue 120° at"
   },
   {
@@ -632,11 +632,6 @@ export const colors = [
     "velocity": 126,
     "color": "#f6181e",
     "notes": "Approximate hue 120° at"
-  },
-  {
-    "velocity": 127,
-    "color": "#000000",
-    "notes": "empty?"
   }
 ]
 

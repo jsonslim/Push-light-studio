@@ -18,6 +18,11 @@ function App() {
   // State for selected pad (grid index 0-63)
   const [selectedPad, setSelectedPad] = useState<number | null>(null);
 
+  // Pencil mode state
+  const [pencilMode, setPencilMode] = useState<boolean>(false);
+  const [selectedColor, setSelectedColor] = useState<number>(116); // Default to black/off
+  const [isDrawing, setIsDrawing] = useState<boolean>(false); // Track if mouse is held down
+
   // Frames state: array of frames, each containing its own padColors
   // colorID 116 = velocity 116 = black/off (#000000)
   const [frames, setFrames] = useState<Frame[]>([
@@ -28,28 +33,85 @@ function App() {
   // Get current frame's padColors
   const currentPadColors = frames[currentFrameIndex]?.padColors || Array(64).fill(116);
 
+  const paintPad = (gridIndex: number) => {
+    // Helper function to paint a pad with the selected color
+    setFrames(prev => {
+      const newFrames = [...prev];
+      const newPadColors = [...newFrames[currentFrameIndex].padColors];
+      newPadColors[gridIndex] = selectedColor;
+      newFrames[currentFrameIndex] = {
+        ...newFrames[currentFrameIndex],
+        padColors: newPadColors
+      };
+      return newFrames;
+    });
+  };
+
   const handlePadClick = (padId: number) => {
     // Find the grid index for this pad id
     const gridIndex = pads.findIndex(p => p.id === padId);
     if (gridIndex !== -1) {
-      setSelectedPad(gridIndex);
+      if (pencilMode) {
+        // In pencil mode, paint the pad with the selected color
+        paintPad(gridIndex);
+      } else {
+        // In normal mode, select the pad
+        setSelectedPad(gridIndex);
+      }
+    }
+  };
+
+  const handlePadMouseDown = (padId: number) => {
+    if (pencilMode) {
+      setIsDrawing(true);
+      // Paint the first pad when mouse is pressed
+      const gridIndex = pads.findIndex(p => p.id === padId);
+      if (gridIndex !== -1) {
+        paintPad(gridIndex);
+      }
+    }
+  };
+
+  const handlePadMouseEnter = (padId: number) => {
+    if (pencilMode && isDrawing) {
+      // Paint pads while dragging
+      const gridIndex = pads.findIndex(p => p.id === padId);
+      if (gridIndex !== -1) {
+        paintPad(gridIndex);
+      }
+    }
+  };
+
+  const handlePadMouseUp = () => {
+    if (pencilMode) {
+      setIsDrawing(false);
     }
   };
 
   const handleColorSelect = (colorID: number) => {
-    if (selectedPad !== null) {
-      // Update the color for the selected pad in the current frame
-      setFrames(prev => {
-        const newFrames = [...prev];
-        const newPadColors = [...newFrames[currentFrameIndex].padColors];
-        newPadColors[selectedPad] = colorID;
-        newFrames[currentFrameIndex] = {
-          ...newFrames[currentFrameIndex],
-          padColors: newPadColors
-        };
-        return newFrames;
-      });
+    if (pencilMode) {
+      // In pencil mode, just update the selected color for painting
+      setSelectedColor(colorID);
+    } else {
+      // In normal mode, apply color to the selected pad
+      if (selectedPad !== null) {
+        setFrames(prev => {
+          const newFrames = [...prev];
+          const newPadColors = [...newFrames[currentFrameIndex].padColors];
+          newPadColors[selectedPad] = colorID;
+          newFrames[currentFrameIndex] = {
+            ...newFrames[currentFrameIndex],
+            padColors: newPadColors
+          };
+          return newFrames;
+        });
+      }
     }
+  };
+
+  const handleTogglePencilMode = () => {
+    setPencilMode(prev => !prev);
+    setSelectedPad(null); // Clear pad selection when toggling mode
   };
 
   const handleFrameSelect = (frameIndex: number) => {
@@ -159,8 +221,12 @@ function App() {
     setSelectedPad(null);
   };
 
-  // Get the colorID of the currently selected pad
-  const selectedPadColorID = selectedPad !== null ? currentPadColors[selectedPad] : null;
+  // Get the colorID to highlight in the palette
+  // In pencil mode: highlight the selected color for painting
+  // In normal mode: highlight the current pad's color
+  const selectedPadColorID = pencilMode
+    ? selectedColor
+    : (selectedPad !== null ? currentPadColors[selectedPad] : null);
 
   return (
     <>
@@ -177,6 +243,9 @@ function App() {
             selectedPad={selectedPad}
             padColors={currentPadColors}
             onPadClick={handlePadClick}
+            onPadMouseDown={handlePadMouseDown}
+            onPadMouseEnter={handlePadMouseEnter}
+            onPadMouseUp={handlePadMouseUp}
           />
         </div>
 
@@ -186,6 +255,8 @@ function App() {
           onNextFrame={handleNextFrame}
           onPrevFrame={handlePrevFrame}
           onCopyToNextFrame={handleCopyToNextFrame}
+          onTogglePencilMode={handleTogglePencilMode}
+          pencilMode={pencilMode}
           currentFrameNumber={currentFrameIndex + 1}
         />
 

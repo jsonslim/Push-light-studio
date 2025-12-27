@@ -7,7 +7,7 @@ interface ColorPaletteProps {
 
 const ColorPalette = ({ selectedColorID, onColorSelect }: ColorPaletteProps) => {
     const size = '30px';
-    const grid = Array.from({ length: 128 });
+    const grid = Array.from({ length: 127 });
 
     const handleColorClick = (colorID: number) => {
         onColorSelect(colorID);
