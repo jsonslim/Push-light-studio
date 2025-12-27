@@ -5,6 +5,7 @@ import ControlPanel from './components/ControlPanel'
 import ColorPalette from './components/ColorPalette'
 import FrameLine from './components/FrameLine'
 import { pads } from './components/globals'
+import { generateMidiFromFrames, downloadMidiFile } from './services/midiService'
 
 import './App.css'
 
@@ -105,7 +106,20 @@ function App() {
   };
 
   const handleExportMidi = () => {
-    console.log('Export MIDI');
+    console.log('Export MIDI button clicked');
+    try {
+      console.log('Exporting MIDI from', frames.length, 'frames');
+
+      // Generate MIDI data from all frames
+      const midiData = generateMidiFromFrames(frames, pads);
+
+      // Download the MIDI file
+      downloadMidiFile(midiData, 'push-animation.mid');
+      console.log('MIDI export completed successfully');
+    } catch (error) {
+      console.error('Failed to export MIDI:', error);
+      alert('Failed to export MIDI file. Check the console for details.');
+    }
   };
 
   const handleNextFrame = () => {
