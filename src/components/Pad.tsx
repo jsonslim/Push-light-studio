@@ -8,6 +8,8 @@ interface PadProps {
   colorID?: number;
   isSelected?: boolean;
   onClick?: (id: number) => void;
+  onMouseDown?: (id: number) => void;
+  onMouseEnter?: (id: number) => void;
 }
 
 const Pad = ({
@@ -17,10 +19,20 @@ const Pad = ({
   aspectRatio = '1.3 / 1',
   colorID = 0,
   isSelected = false,
-  onClick
+  onClick,
+  onMouseDown,
+  onMouseEnter
 }: PadProps) => {
   const handleClick = () => {
     onClick?.(id);
+  };
+
+  const handleMouseDown = () => {
+    onMouseDown?.(id);
+  };
+
+  const handleMouseEnter = () => {
+    onMouseEnter?.(id);
   };
 
   const borderStyle = isSelected
@@ -33,6 +45,8 @@ const Pad = ({
   return (
     <div
       onClick={handleClick}
+      onMouseDown={handleMouseDown}
+      onMouseEnter={handleMouseEnter}
       style={{
         ...borderStyle,
         width: maxWidth,
@@ -44,6 +58,7 @@ const Pad = ({
         transition: 'background-color 0.1s ease',
         borderRadius: '6px',
         boxShadow: '0 2px 5px rgba(0,0,0,0.15)',
+        userSelect: 'none', // Prevent text selection while dragging
       }}
     />
   );

@@ -5,6 +5,7 @@ import ControlPanel from './components/ControlPanel'
 import ColorPalette from './components/ColorPalette'
 import FrameLine from './components/FrameLine'
 import { pads } from './components/globals'
+import { generateMidiFromFrames, downloadMidiFile } from './services/midiService'
 
 import './App.css'
 
@@ -15,46 +16,73 @@ interface Frame {
 }
 
 function App() {
-  // State for selected pad (grid index 0-63)
-  const [selectedPad, setSelectedPad] = useState<number | null>(null);
+  // Pencil mode (always active now)
+  const [selectedColor, setSelectedColor] = useState<number>(117); // Default to color ID 117
+  const [isDrawing, setIsDrawing] = useState<boolean>(false); // Track if mouse is held down
 
   // Frames state: array of frames, each containing its own padColors
   // colorID 116 = velocity 116 = black/off (#000000)
   const [frames, setFrames] = useState<Frame[]>([
-    { id: 1, padColors: Array(64).fill(116) } // Start with one frame, all pads off
+    { id: 1, padColors: Array(64).fill(117) } // Start with one frame, all pads off
   ]);
   const [currentFrameIndex, setCurrentFrameIndex] = useState<number>(0);
 
   // Get current frame's padColors
   const currentPadColors = frames[currentFrameIndex]?.padColors || Array(64).fill(116);
 
+  const paintPad = (gridIndex: number) => {
+    // Helper function to paint a pad with the selected color
+    setFrames(prev => {
+      const newFrames = [...prev];
+      const newPadColors = [...newFrames[currentFrameIndex].padColors];
+      newPadColors[gridIndex] = selectedColor;
+      newFrames[currentFrameIndex] = {
+        ...newFrames[currentFrameIndex],
+        padColors: newPadColors
+      };
+      return newFrames;
+    });
+  };
+
   const handlePadClick = (padId: number) => {
     // Find the grid index for this pad id
     const gridIndex = pads.findIndex(p => p.id === padId);
     if (gridIndex !== -1) {
-      setSelectedPad(gridIndex);
+      // Paint the pad with the selected color
+      paintPad(gridIndex);
     }
   };
 
-  const handleColorSelect = (colorID: number) => {
-    if (selectedPad !== null) {
-      // Update the color for the selected pad in the current frame
-      setFrames(prev => {
-        const newFrames = [...prev];
-        const newPadColors = [...newFrames[currentFrameIndex].padColors];
-        newPadColors[selectedPad] = colorID;
-        newFrames[currentFrameIndex] = {
-          ...newFrames[currentFrameIndex],
-          padColors: newPadColors
-        };
-        return newFrames;
-      });
+  const handlePadMouseDown = (padId: number) => {
+    setIsDrawing(true);
+    // Paint the first pad when mouse is pressed
+    const gridIndex = pads.findIndex(p => p.id === padId);
+    if (gridIndex !== -1) {
+      paintPad(gridIndex);
     }
+  };
+
+  const handlePadMouseEnter = (padId: number) => {
+    if (isDrawing) {
+      // Paint pads while dragging
+      const gridIndex = pads.findIndex(p => p.id === padId);
+      if (gridIndex !== -1) {
+        paintPad(gridIndex);
+      }
+    }
+  };
+
+  const handlePadMouseUp = () => {
+    setIsDrawing(false);
+  };
+
+  const handleColorSelect = (colorID: number) => {
+    // Update the selected color for painting
+    setSelectedColor(colorID);
   };
 
   const handleFrameSelect = (frameIndex: number) => {
     setCurrentFrameIndex(frameIndex);
-    setSelectedPad(null); // Clear pad selection when switching frames
   };
 
   const handleAddFrame = () => {
@@ -75,24 +103,34 @@ function App() {
         return newFrames;
       });
     }
-    setSelectedPad(null);
   };
 
   const handleExportMidi = () => {
-    console.log('Export MIDI');
+    console.log('Export MIDI button clicked');
+    try {
+      console.log('Exporting MIDI from', frames.length, 'frames');
+
+      // Generate MIDI data from all frames
+      const midiData = generateMidiFromFrames(frames, pads);
+
+      // Download the MIDI file
+      downloadMidiFile(midiData, 'push-animation.mid');
+      console.log('MIDI export completed successfully');
+    } catch (error) {
+      console.error('Failed to export MIDI:', error);
+      alert('Failed to export MIDI file. Check the console for details.');
+    }
   };
 
   const handleNextFrame = () => {
     if (currentFrameIndex < frames.length - 1) {
       setCurrentFrameIndex(currentFrameIndex + 1);
-      setSelectedPad(null);
     }
   };
 
   const handlePrevFrame = () => {
     if (currentFrameIndex > 0) {
       setCurrentFrameIndex(currentFrameIndex - 1);
-      setSelectedPad(null);
     }
   };
 
@@ -125,11 +163,9 @@ function App() {
       // Optionally switch to the next frame after copying
       if (nextFrameIndex < frames.length) {
         setCurrentFrameIndex(nextFrameIndex);
-        setSelectedPad(null);
       } else {
         // If we created a new frame, switch to it
         setCurrentFrameIndex(nextFrameIndex);
-        setSelectedPad(null);
       }
     }
   };
@@ -155,12 +191,10 @@ function App() {
       // If we deleted a frame before the current one, adjust the index
       setCurrentFrameIndex(currentFrameIndex - 1);
     }
-
-    setSelectedPad(null);
   };
 
-  // Get the colorID of the currently selected pad
-  const selectedPadColorID = selectedPad !== null ? currentPadColors[selectedPad] : null;
+  // Highlight the selected color for painting in the palette
+  const selectedPadColorID = selectedColor;
 
   return (
     <>
@@ -174,9 +208,11 @@ function App() {
 
         <div className='pad-container'>
           <PadGrid
-            selectedPad={selectedPad}
             padColors={currentPadColors}
             onPadClick={handlePadClick}
+            onPadMouseDown={handlePadMouseDown}
+            onPadMouseEnter={handlePadMouseEnter}
+            onPadMouseUp={handlePadMouseUp}
           />
         </div>
 

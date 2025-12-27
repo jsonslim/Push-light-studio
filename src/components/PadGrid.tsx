@@ -2,12 +2,14 @@ import Pad from './Pad';
 import { pads } from './globals';
 
 interface PadGridProps {
-  selectedPad: number | null;
   padColors: number[];
   onPadClick: (padId: number) => void;
+  onPadMouseDown?: (padId: number) => void;
+  onPadMouseEnter?: (padId: number) => void;
+  onPadMouseUp?: () => void;
 }
 
-const PadGrid = ({ selectedPad, padColors, onPadClick }: PadGridProps) => {
+const PadGrid = ({ padColors, onPadClick, onPadMouseDown, onPadMouseEnter, onPadMouseUp }: PadGridProps) => {
   const grid = Array.from({ length: 64 });
 
   return (
@@ -24,6 +26,8 @@ const PadGrid = ({ selectedPad, padColors, onPadClick }: PadGridProps) => {
         boxSizing: 'border-box',
         borderRadius: '8px'
       }}
+      onMouseUp={onPadMouseUp}
+      onMouseLeave={onPadMouseUp} // Also stop drawing when mouse leaves the grid
     >
       {grid.map((_, i) => (
         <Pad
@@ -32,8 +36,10 @@ const PadGrid = ({ selectedPad, padColors, onPadClick }: PadGridProps) => {
           maxWidth={'80px'}
           aspectRatio={'1.3 / 1'}
           colorID={padColors[i]}
-          isSelected={selectedPad === i}
+          isSelected={false}
           onClick={onPadClick}
+          onMouseDown={onPadMouseDown}
+          onMouseEnter={onPadMouseEnter}
         />
       ))}
     </div>

@@ -30,6 +30,7 @@ const ControlPanel: React.FC<UIControlsProps> = ({
             }}
         >
             <div>Frame: {currentFrameNumber}</div>
+
             <div style={{ display: "flex", flexDirection: 'row' }}>
                 <button onClick={onPrevFrame}>Prev Frame</button>
                 <button onClick={onNextFrame}>Next Frame</button>
