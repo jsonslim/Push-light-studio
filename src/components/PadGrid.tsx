@@ -2,7 +2,6 @@ import Pad from './Pad';
 import { pads } from './globals';
 
 interface PadGridProps {
-  selectedPad: number | null;
   padColors: number[];
   onPadClick: (padId: number) => void;
   onPadMouseDown?: (padId: number) => void;
@@ -10,7 +9,7 @@ interface PadGridProps {
   onPadMouseUp?: () => void;
 }
 
-const PadGrid = ({ selectedPad, padColors, onPadClick, onPadMouseDown, onPadMouseEnter, onPadMouseUp }: PadGridProps) => {
+const PadGrid = ({ padColors, onPadClick, onPadMouseDown, onPadMouseEnter, onPadMouseUp }: PadGridProps) => {
   const grid = Array.from({ length: 64 });
 
   return (
@@ -37,7 +36,7 @@ const PadGrid = ({ selectedPad, padColors, onPadClick, onPadMouseDown, onPadMous
           maxWidth={'80px'}
           aspectRatio={'1.3 / 1'}
           colorID={padColors[i]}
-          isSelected={selectedPad === i}
+          isSelected={false}
           onClick={onPadClick}
           onMouseDown={onPadMouseDown}
           onMouseEnter={onPadMouseEnter}

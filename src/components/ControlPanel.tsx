@@ -6,8 +6,6 @@ interface UIControlsProps {
     onNextFrame: () => void;
     onPrevFrame: () => void;
     onCopyToNextFrame: () => void;
-    onTogglePencilMode: () => void;
-    pencilMode: boolean;
     currentFrameNumber: number;
 }
 
@@ -17,8 +15,6 @@ const ControlPanel: React.FC<UIControlsProps> = ({
     onNextFrame,
     onPrevFrame,
     onCopyToNextFrame,
-    onTogglePencilMode,
-    pencilMode,
     currentFrameNumber,
 }) => {
     return (
@@ -34,16 +30,6 @@ const ControlPanel: React.FC<UIControlsProps> = ({
             }}
         >
             <div>Frame: {currentFrameNumber}</div>
-
-            <button
-                onClick={onTogglePencilMode}
-                style={{
-                    backgroundColor: pencilMode ? '#4CAF50' : undefined,
-                    fontWeight: pencilMode ? 'bold' : undefined,
-                }}
-            >
-                {pencilMode ? '✏️ Pencil ON' : '✏️ Pencil OFF'}
-            </button>
 
             <div style={{ display: "flex", flexDirection: 'row' }}>
                 <button onClick={onPrevFrame}>Prev Frame</button>
