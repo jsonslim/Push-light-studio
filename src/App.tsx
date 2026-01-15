@@ -21,21 +21,22 @@ function App() {
   const [isDrawing, setIsDrawing] = useState<boolean>(false); // Track if mouse is held down
 
   // Frames state: array of frames, each containing its own padColors
-  // colorID 116 = velocity 116 = black/off (#000000)
+  // colorID 117 = velocity 117 = black/off (#000000)
   const [frames, setFrames] = useState<Frame[]>([
     { id: 1, padColors: Array(64).fill(117) } // Start with one frame, all pads off
   ]);
   const [currentFrameIndex, setCurrentFrameIndex] = useState<number>(0);
 
   // Get current frame's padColors
-  const currentPadColors = frames[currentFrameIndex]?.padColors || Array(64).fill(116);
+  const currentPadColors = frames[currentFrameIndex]?.padColors || Array(64).fill(117);
 
-  const paintPad = (gridIndex: number) => {
-    // Helper function to paint a pad with the selected color
+  const paintPad = (gridIndex: number, colorToUse?: number) => {
+    // Helper function to paint a pad with the selected color (or eraser color if specified)
+    const finalColor = colorToUse !== undefined ? colorToUse : selectedColor;
     setFrames(prev => {
       const newFrames = [...prev];
       const newPadColors = [...newFrames[currentFrameIndex].padColors];
-      newPadColors[gridIndex] = selectedColor;
+      newPadColors[gridIndex] = finalColor;
       newFrames[currentFrameIndex] = {
         ...newFrames[currentFrameIndex],
         padColors: newPadColors
@@ -44,30 +45,35 @@ function App() {
     });
   };
 
-  const handlePadClick = (padId: number) => {
+  const handlePadClick = (padId: number, event?: React.MouseEvent) => {
     // Find the grid index for this pad id
     const gridIndex = pads.findIndex(p => p.id === padId);
     if (gridIndex !== -1) {
-      // Paint the pad with the selected color
-      paintPad(gridIndex);
+      // Right-click = eraser mode (set to black/off - velocity 117)
+      const isRightClick = event?.button === 2;
+      paintPad(gridIndex, isRightClick ? 117 : undefined);
     }
   };
 
-  const handlePadMouseDown = (padId: number) => {
+  const handlePadMouseDown = (padId: number, event?: React.MouseEvent) => {
     setIsDrawing(true);
     // Paint the first pad when mouse is pressed
     const gridIndex = pads.findIndex(p => p.id === padId);
     if (gridIndex !== -1) {
-      paintPad(gridIndex);
+      // Right-click = eraser mode (set to black/off - velocity 117)
+      const isRightClick = event?.button === 2;
+      paintPad(gridIndex, isRightClick ? 117 : undefined);
     }
   };
 
-  const handlePadMouseEnter = (padId: number) => {
+  const handlePadMouseEnter = (padId: number, event?: React.MouseEvent) => {
     if (isDrawing) {
       // Paint pads while dragging
       const gridIndex = pads.findIndex(p => p.id === padId);
       if (gridIndex !== -1) {
-        paintPad(gridIndex);
+        // Check if right mouse button is pressed (button 2)
+        const isRightClick = event?.buttons === 2;
+        paintPad(gridIndex, isRightClick ? 117 : undefined);
       }
     }
   };
@@ -87,7 +93,7 @@ function App() {
 
   const handleAddFrame = () => {
     const newFrameId = Math.max(...frames.map(f => f.id), 0) + 1;
-    setFrames(prev => [...prev, { id: newFrameId, padColors: Array(64).fill(116) }]);
+    setFrames(prev => [...prev, { id: newFrameId, padColors: Array(64).fill(117) }]);
     setCurrentFrameIndex(frames.length); // Select the newly added frame
   };
 
@@ -98,7 +104,7 @@ function App() {
         const newFrames = [...prev];
         newFrames[currentFrameIndex] = {
           ...newFrames[currentFrameIndex],
-          padColors: Array(64).fill(116)
+          padColors: Array(64).fill(117)
         };
         return newFrames;
       });
@@ -113,9 +119,17 @@ function App() {
       // Generate MIDI data from all frames
       const midiData = generateMidiFromFrames(frames, pads);
 
+      // Generate filename with timestamp
+      const now = new Date();
+      const timestamp = now.toISOString()
+        .replace(/T/, '_')
+        .replace(/:/g, '-')
+        .replace(/\..+/, ''); // Format: YYYY-MM-DD_HH-MM-SS
+      const filename = `push-animation_${timestamp}.mid`;
+
       // Download the MIDI file
-      downloadMidiFile(midiData, 'push-animation.mid');
-      console.log('MIDI export completed successfully');
+      downloadMidiFile(midiData, filename);
+      console.log('MIDI export completed successfully:', filename);
     } catch (error) {
       console.error('Failed to export MIDI:', error);
       alert('Failed to export MIDI file. Check the console for details.');
