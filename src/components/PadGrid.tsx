@@ -3,9 +3,9 @@ import { pads } from './globals';
 
 interface PadGridProps {
   padColors: number[];
-  onPadClick: (padId: number) => void;
-  onPadMouseDown?: (padId: number) => void;
-  onPadMouseEnter?: (padId: number) => void;
+  onPadClick: (padId: number, event?: React.MouseEvent) => void;
+  onPadMouseDown?: (padId: number, event?: React.MouseEvent) => void;
+  onPadMouseEnter?: (padId: number, event?: React.MouseEvent) => void;
   onPadMouseUp?: () => void;
 }
 
@@ -28,6 +28,7 @@ const PadGrid = ({ padColors, onPadClick, onPadMouseDown, onPadMouseEnter, onPad
       }}
       onMouseUp={onPadMouseUp}
       onMouseLeave={onPadMouseUp} // Also stop drawing when mouse leaves the grid
+      onContextMenu={(e) => e.preventDefault()} // Prevent context menu on right-click
     >
       {grid.map((_, i) => (
         <Pad

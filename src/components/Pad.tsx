@@ -7,9 +7,9 @@ interface PadProps {
   aspectRatio?: string;
   colorID?: number;
   isSelected?: boolean;
-  onClick?: (id: number) => void;
-  onMouseDown?: (id: number) => void;
-  onMouseEnter?: (id: number) => void;
+  onClick?: (id: number, event?: React.MouseEvent) => void;
+  onMouseDown?: (id: number, event?: React.MouseEvent) => void;
+  onMouseEnter?: (id: number, event?: React.MouseEvent) => void;
 }
 
 const Pad = ({
@@ -23,16 +23,16 @@ const Pad = ({
   onMouseDown,
   onMouseEnter
 }: PadProps) => {
-  const handleClick = () => {
-    onClick?.(id);
+  const handleClick = (event: React.MouseEvent) => {
+    onClick?.(id, event);
   };
 
-  const handleMouseDown = () => {
-    onMouseDown?.(id);
+  const handleMouseDown = (event: React.MouseEvent) => {
+    onMouseDown?.(id, event);
   };
 
-  const handleMouseEnter = () => {
-    onMouseEnter?.(id);
+  const handleMouseEnter = (event: React.MouseEvent) => {
+    onMouseEnter?.(id, event);
   };
 
   const borderStyle = isSelected

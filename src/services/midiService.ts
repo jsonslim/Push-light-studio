@@ -156,8 +156,8 @@ export function generateMidiFromFrames(
 
             // For each pad in the frame
             frame.padColors.forEach((velocity, padGridIndex) => {
-                // Skip if velocity is 0 or 116 (off/black)
-                if (velocity === 0 || velocity === 116) {
+                // Skip if velocity is 117 (off/black)
+                if (velocity === 117) {
                     return;
                 }
 
